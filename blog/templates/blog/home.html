@@ -1,0 +1,326 @@
+{% extends 'blog/base.html' %}
+{% load static %} <!-- Load the static template tag -->
+
+
+{% block title %}Envyh - Luxury Architecture and Interior Design{% endblock %}
+
+{% block content %}
+
+<section class="slider-wrap-layout2">
+    <div class="rc-carousel nav-control-layout2" data-loop="true" data-center="true" data-items="5" data-margin="20"
+         data-autoplay="true" data-autoplay-timeout="5000" data-smart-speed="700" data-dots="false" data-nav="true"
+         data-nav-speed="false" data-r-x-small="1" data-r-x-small-nav="true" data-r-x-small-dots="false"
+         data-r-x-medium="1" data-r-x-medium-nav="true" data-r-x-medium-dots="false" data-r-small="1"
+         data-r-small-nav="true" data-r-small-dots="false" data-r-medium="2" data-r-medium-nav="true"
+         data-r-medium-dots="false" data-r-large="2" data-r-large-nav="true" data-r-large-dots="false"
+         data-r-extra-large="2" data-r-extra-large-nav="true" data-r-extra-large-dots="false">
+        {% for featured_post in sliderFeaturedPosts %}
+        <div class="slider-box-layout2">
+            <div class="item-img">
+                <img src="{{ featured_post.post.thumbnail_large.url }}" alt="slider">
+                <div class="item-content">
+                    <ul class="entry-meta meta-color-light">
+                        <li><i class="fas fa-tag"></i>{{ featured_post.post.category }}</li>
+                        <li><i class="fas fa-calendar-alt"></i>{{ featured_post.post.pub_date|date:"F d" }}</li>
+                    </ul>
+                    <h2 class="item-title"><a href="{% url 'post_detail' slug=featured_post.post.slug %}">{{ featured_post.post.title }}</a></h2>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!-- Slider Area End Here -->
+<!-- Blog Area Start Here -->
+<section class="blog-wrap-layout3">
+    <div class="container">
+        <div class="row gutters-40">
+            <div class="col-lg-8">
+                <div class="blog-box-layout1 text-left">
+                    <div class="item-img">
+                        <a href="{% url 'post_detail' slug=page_posts.0.slug %}"><img src="{{ page_posts.0.thumbnail_medium.url }}" alt="blog"></a>
+                    </div>
+                    <div class="item-content">
+                        <ul class="entry-meta meta-color-dark">
+                            <li><i class="fas fa-tag"></i>{{ page_posts.category }}</li>
+                            <li><i class="fas fa-calendar-alt"></i>{{ page_posts.0.pub_date|date:"F d" }}</li>
+                        </ul>
+                        <h2 class="item-title"> <a href="{% url 'post_detail' slug=page_posts.0.slug %}">{{ page_posts.0.title }}</a></h2>
+                        <p>{{ page_posts.0.description }}</p>
+                        <a href="{% url 'post_detail' slug=page_posts.0.slug %}" class="item-btn">READ MORE<i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="row gutters-40">
+                    {% for post in page_posts|slice:"1:" %}
+                    <div class="col-md-6">
+                        <div class="blog-box-layout1 text-left">
+                            <div class="item-img">
+                                <a href="{% url 'post_detail' slug=post.slug %}"><img src="{{ post.thumbnail_small.url }}" alt="blog"></a>
+                            </div>
+                            <div class="item-content">
+                                <ul class="entry-meta meta-color-dark">
+                                    <li><i class="fas fa-tag"></i>{{ post.category }}</li>
+                                    <li><i class="fas fa-calendar-alt"></i>{{ post.pub_date|date:"F d" }}</li>
+
+                                </ul>
+                                <h3 class="item-title"> <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h3>
+                                <p>{{ post.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="pagination-layout1">
+                    <ul>
+                        {% if page_posts.has_previous %}
+                        <li><a href="?page=1">&laquo; first</a></li>
+                        <li><a href="?page={{ page_posts.previous_page_number }}">previous</a></li>
+                        {% endif %}
+                        <li class="active">{{ page_posts.number }}</li>
+                        {% if page_posts.has_next %}
+                        <li><a href="?page={{ page_posts.next_page_number }}">next</a></li>
+                        <li><a href="?page={{ page_posts.paginator.num_pages }}">last &raquo;</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
+                <!-- Social Media
+                <div class="widget">
+                    <div class="section-heading heading-dark">
+                        <h3 class="item-heading">FOLLOW ME ON</h3>
+                    </div>
+                    <div class="widget-follow-us-2">
+                        <ul>
+                            <li class="single-item"><a href="#"><i class="fab fa-facebook-f"></i>LIKE ME ON</a></li>
+                            <li class="single-item"><a href="#"><i class="fab fa-twitter"></i>52K FOLLOWERS</a></li>
+                            <li class="single-item"><a href="#"><i class="fab fa-instagram"></i>FOLLOW ME</a></li>
+                            <li class="single-item"><a href="#"><i class="fab fa-linkedin-in"></i>FOLLOW ME</a></li>
+                            <li class="single-item"><a href="#"><i class="fab fa-pinterest-p"></i>FOLLOW ME</a></li>
+                            <li class="single-item"><a href="#"><i class="fab fa-youtube"></i>SUBSCRIBE NOW</a></li>
+                        </ul>
+                    </div>
+                </div>
+                -->
+                <!-- Featured Posts
+                <div class="widget">
+                    <div class="widget-post-tab">
+                        <ul class="nav nav-tabs tab-nav-list">
+                            <li class="nav-item">
+                                <a class="active" href="#related1" data-toggle="tab" aria-expanded="false">TRENDING</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#related2" data-toggle="tab" aria-expanded="false">POPULAR</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane fade active show" id="related1">
+                                <ul class="post-list">
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="https://picsum.photos/90/80" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">Thought aful
+                                                Living result
+                                                are aert aos Angeles</a></h4>
+                                        </div>
+                                    </li>
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="https://picsum.photos/90/80" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">Type designer
+                                                Jeremy Tanka
+                                                rdoverhauls online</a></h4>
+                                        </div>
+                                    </li>
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="https://picsum.photos/90/80" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">5 design things
+                                                to look out for
+                                                in June 2019</a></h4>
+                                        </div>
+                                    </li>
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="https://picsum.photos/90/80" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">Marc Falzone
+                                                opens £2 million
+                                                UK Expo Pavilion</a></h4>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="tab-pane fade" id="related2">
+                                <ul class="post-list">
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="img/blog/blog32.jpg" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">5 design things
+                                                to look out for
+                                                in June 2019</a></h4>
+                                        </div>
+                                    </li>
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="img/blog/blog33.jpg" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">Marc Falzone
+                                                opens £2 million
+                                                UK Expo Pavilion</a></h4>
+                                        </div>
+                                    </li>
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="img/blog/blog30.jpg" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">Thought aful
+                                                Living result
+                                                are aert aos Angeles</a></h4>
+                                        </div>
+                                    </li>
+                                    <li class="post-item">
+                                        <div class="item-img">
+                                            <a href="single-blog.html"><img src="img/blog/blog31.jpg" alt="Post"></a>
+                                        </div>
+                                        <div class="item-content">
+                                            <ul class="entry-meta meta-color-dark">
+                                                <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                            </ul>
+                                            <h4 class="item-title"><a href="single-blog.html">Type designer
+                                                Jeremy Tanka
+                                                rdoverhauls online</a></h4>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                -->
+                <!-- Categories
+                <div class="widget">
+                    <div class="section-heading heading-dark">
+                        <h3 class="item-heading">CATEGORIES</h3>
+                    </div>
+                    <div class="widget-categories-2">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    <h4 class="item-title">Travel</h4>
+                                    <span class="item-subtitle">20 Posts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h4 class="item-title">Food</h4>
+                                    <span class="item-subtitle">55 Posts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h4 class="item-title">Beauty &amp; Spa</h4>
+                                    <span class="item-subtitle">30 Posts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h4 class="item-title">Fashion</h4>
+                                    <span class="item-subtitle">15 Posts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h4 class="item-title">Style</h4>
+                                    <span class="item-subtitle">20 Posts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <h4 class="item-title">Technology</h4>
+                                    <span class="item-subtitle">66 Posts</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                -->
+                <div class="widget">
+                    <div class="widget-newsletter-subscribe-dark">
+                        <h3>GET LATEST UPDATES</h3>
+                        <p>NEWSLETTER SUBSCRIBE</p>
+                        <form class="newsletter-subscribe-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="your e-mail address" class="form-control" name="email"
+                                       data-error="E-mail field is required" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group mb-none">
+                                <button type="submit" class="item-btn">SUBSCRIBE</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Featured Post
+                <div class="widget">
+                    <div class="section-heading heading-dark">
+                        <h3 class="item-heading">FEATURED POSTS</h3>
+                    </div>
+                    <div class="widget-featured-post">
+                        <div class="featured-post-box-1">
+                            <div class="item-img">
+                                <img src="https://picsum.photos/359/401" alt="Blog Post">
+                            </div>
+                            <div class="item-content">
+                                <ul class="entry-meta meta-color-dark">
+                                    <li><i class="fas fa-tag"></i>Food</li>
+                                    <li><i class="fas fa-calendar-alt"></i>Jan 19, 2019</li>
+                                    <li><i class="far fa-clock"></i>5 Mins Read</li>
+                                </ul>
+                                <h4 class="item-title">
+                                    <a href="single-blog.html">Falzone opens support UK Expo Pavilion</a>
+                                </h4>
+                                <p>Aliquam erat volutpat. Curabitur vene natiareset
+                                    massa secus tristique.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

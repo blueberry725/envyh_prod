@@ -1,0 +1,88 @@
+<!-- templates/blog/article_detail.html -->
+{% extends 'blog/base.html' %}
+{% load static %} <!-- Load the static template tag -->
+
+{% block title %}{{ article.title }} - Envyh{% endblock %}
+
+{% block content %}
+<section class="inner-page-banner bg-common">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="breadcrumbs-area">
+                    <h1>{{ category.name }}</h1>
+                    <ul>
+                        <li>
+                            <a href="index.html">Home</a>
+                        </li>
+                        <li>Categories</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Inne Page Banner Area End Here -->
+<!-- Blog Area Start Here -->
+<section class="blog-wrap-layout20">
+    <div class="container">
+        <div class="row gutters-50">
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-6 col-md-6 col-12">
+                        <div class="row no-gutters">
+                            {% for post in page_posts %}
+                            <div class="col-xl-6 col-lg-12">
+                                <div class="blog-box-layout10">
+                                    <div class="item-img">
+                                        <img src="{{ page_posts.thumbnail_square.url }}" alt="blog">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 d-flex align-items-center">
+                                <div class="blog-box-layout10">
+                                    <div class="item-content">
+                                        <ul class="entry-meta meta-color-dark">
+                                            <li><i class="fas fa-tag"></i>{{ post.category }}</li>
+                                            <li><i class="fas fa-calendar-alt"></i>{{ post.pub_date|date:"F d" }}</li>
+                                        </ul>
+                                        <h3 class="item-title"> <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a></h3>
+                                        <p>{{ post.description }}</p>
+                                        <a href="{% url 'post_detail' slug=post.slug %}" class="item-btn">READ MORE<i class="fas fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination-layout1 pt--20">
+                    <ul>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 sidebar-widget-area sidebar-break-md">
+                <div class="widget">
+                    <div class="widget-newsletter-subscribe-dark">
+                        <h3>GET LATEST UPDATES</h3>
+                        <p>NEWSLETTER SUBSCRIBE</p>
+                        <form class="newsletter-subscribe-form">
+                            <div class="form-group">
+                                <input type="text" placeholder="your e-mail address" class="form-control" name="email"
+                                       data-error="E-mail field is required" required>
+                                <div class="help-block with-errors"></div>
+                            </div>
+                            <div class="form-group mb-none">
+                                <button type="submit" class="item-btn">SUBSCRIBE</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
