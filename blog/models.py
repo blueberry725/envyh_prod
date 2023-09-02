@@ -1,6 +1,7 @@
 from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from PIL import Image, ImageOps
+import os
 
 # Category Model
 class Category(models.Model):
@@ -76,9 +77,11 @@ class Post(models.Model):
 
         for width, height, field_name in thumbnail_sizes:
             thumb_img = ImageOps.fit(img, (width, height), method=0, bleed=0.0, centering=(0.5, 0.5))
-            thumbnail_path = self.image.path.replace('post_images', field_name)
+            # Construct the thumbnail path using the MEDIA_ROOT and upload_to
+            thumbnail_path = os.path.join(settings.MEDIA_ROOT, self._meta.get_field(field_name).upload_to,
+                                          self.image.name)
             thumb_img.save(thumbnail_path)
-            setattr(self, field_name, thumbnail_path.replace('image_upload/', ''))
+            setattr(self, field_name, thumbnail_path.replace(settings.MEDIA_ROOT, ''))
 
         self.save()
 
