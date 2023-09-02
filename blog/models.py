@@ -2,6 +2,7 @@ from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from PIL import Image, ImageOps
 import os
+from django.conf import settings
 
 # Category Model
 class Category(models.Model):
